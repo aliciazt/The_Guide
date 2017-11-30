@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "689909222346",
+    "firebase_url": "https://veracruz-guide.firebaseio.com",
+    "project_id": "veracruz-guide",
+    "storage_bucket": "veracruz-guide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689909222346:android:d41e12936ff42786",
+        "android_client_info": {
+          "package_name": "com.example.dell.mymenunavegacion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689909222346-3sd1s7e3874nsav746bdq7o5a1i33vpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANyGhwVCeFOmMnhtlb6QIoY6wJhGX3Pf8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
