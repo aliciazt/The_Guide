@@ -7,9 +7,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +35,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker marcador;
     double lat=0.0;
     double longi=0.0;
+    private static final  int LOCATION_PERMISSION_REQUEST_CODE =1;
+    private boolean mPermissionDenied = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        miubicacion();
+        checarpermisos();
+
         /*
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
@@ -72,6 +79,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camera));
       //  mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);*/
+    }
+    private void checarpermisos(){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            Toast.makeText(this, "This version is not Android 6 or later " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+
+        } else {
+
+            int haslocationPermission = checkSelfPermission(permission.ACCESS_FINE_LOCATION);
+
+            if (haslocationPermission!= PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {permission.ACCESS_FINE_LOCATION},
+                        LOCATION_PERMISSION_REQUEST_CODE);
+
+                Toast.makeText(this, "Requesting permissions", Toast.LENGTH_LONG).show();
+
+            }else if (haslocationPermission== PackageManager.PERMISSION_GRANTED){
+
+                Toast.makeText(this, "The permissions are already granted ", Toast.LENGTH_LONG).show();
+                miubicacion();
+
+            }
+
+        }
+
+        return;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if(LOCATION_PERMISSION_REQUEST_CODE == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "OK Permissions granted ! 🙂 " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                miubicacion();
+            } else {
+                Toast.makeText(this, "Permissions are not granted ! 🙁   " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
 private void agregarmarcador(double lat, double lng){
@@ -123,6 +171,7 @@ LocationListener loclistener=new LocationListener() {
 };
 
 public void miubicacion(){
+
     locationmanager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
     if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
         return;
@@ -132,5 +181,6 @@ public void miubicacion(){
     locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,0,loclistener);
     locationlistener = loclistener;
 }
+
 
 }
