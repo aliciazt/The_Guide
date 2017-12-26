@@ -8,11 +8,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -24,8 +22,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import java.util.ArrayList;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     public static LocationManager locationmanager;
@@ -36,7 +40,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double lat=0.0;
     double longi=0.0;
     private static final  int LOCATION_PERMISSION_REQUEST_CODE =1;
-    private boolean mPermissionDenied = false;
+    private boolean mPermissionDenied = false; //est madre ni se ocupa
+ //cosas para firebase
+   private static DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+    //lista para guardar los museos
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    //funcion para tomar los valores de la base de datos;
+    private void  retrievedata(){
+        Toast.makeText(this, "entre a la funcion",Toast.LENGTH_LONG).show();
+        databaseReference.child("MUSEOS").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<museos> muse = new ArrayList<museos>();
+                for(DataSnapshot entry: dataSnapshot.getChildren()){
+                    museos museo = new museos();
 
+                    DataSnapshot foo=entry.child("Nombre");
+                    museo.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    foo =entry.child("LATITUD");
+                    museo.Latitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()): 10;
+
+                    foo=entry.child("LONGITUD");
+                    museo.Longitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()) : 10 ;
+
+                    foo=entry.child("IMAGEN_URL ");
+                    museo.imagen_url= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    foo=entry.child("SITIO");
+                    museo.url_sitio= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    muse.add(museo);
+
+                }
+                ponemoslosmarker(muse);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -61,25 +104,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        checarpermisos();
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        /*
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.setMinZoomPreference(15);
-        mMap.setMaxZoomPreference(19);
-        CameraPosition camera = new CameraPosition.Builder()
-                .target(sydney)
-                .zoom(19)           // max 21
-                .bearing(0)         //rotacion de la camara
-                .tilt(90)           //efecto 3d
-                .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camera));
-      //  mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);*/
+        checarpermisos(); //hace todo lo de los permisos
+        retrievedata();
+
     }
+    private void ponemoslosmarker(ArrayList<museos> hola){
+
+        LatLng coorde;
+        for (int i =0; i<hola.size();i++){
+        Toast.makeText(this,""+hola.get(i).nombre,Toast.LENGTH_LONG).show();
+            coorde= new LatLng(hola.get(i).Latitud,hola.get(i).Longitud);
+            mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre));
+     }
+    }
+
+
     private void checarpermisos(){
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
 
@@ -135,8 +176,8 @@ private void agregarmarcador(double lat, double lng){
             .bearing(0)         //rotacion de la camara
             .tilt(90)           //efecto 3d
             .build();
-    mMap.animateCamera(miubi); //mueve la camara hasta la posicion del marcador de mi ubicacion.
-   mMap.setMinZoomPreference(15);
+     mMap.animateCamera(miubi); //mueve la camara hasta la posicion del marcador de mi ubicacion.
+  // mMap.setMinZoomPreference(15);
     mMap.setMaxZoomPreference(17);
 }
 private void actualizarubicacion(Location location){
