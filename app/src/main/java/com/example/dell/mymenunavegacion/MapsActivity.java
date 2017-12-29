@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -31,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
     public static LocationManager locationmanager;
     public static Location location;
     public static LocationListener locationlistener;
@@ -58,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //funcion para tomar los valores de la base de datos;
     private void  retrievedata(){
-        Toast.makeText(this, "entre a la funcion",Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "entre a la funcion",Toast.LENGTH_LONG).show();
         databaseReference.child("MUSEOS").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(DataSnapshot entry: dataSnapshot.getChildren()){
                     museos museo = new museos();
 
-                    DataSnapshot foo=entry.child("Nombre");
+                    DataSnapshot foo=entry.child("NOMBRE");
                     museo.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo =entry.child("LATITUD");
@@ -114,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng coorde;
         for (int i =0; i<hola.size();i++){
-        Toast.makeText(this,""+hola.get(i).nombre,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,""+hola.get(i).nombre,Toast.LENGTH_LONG).show();
             coorde= new LatLng(hola.get(i).Latitud,hola.get(i).Longitud);
             mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre));
      }
@@ -135,11 +137,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 requestPermissions(new String[] {permission.ACCESS_FINE_LOCATION},
                         LOCATION_PERMISSION_REQUEST_CODE);
 
-                Toast.makeText(this, "Requesting permissions", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "Requesting permissions", Toast.LENGTH_LONG).show();
 
             }else if (haslocationPermission== PackageManager.PERMISSION_GRANTED){
 
-                Toast.makeText(this, "The permissions are already granted ", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "The permissions are already granted ", Toast.LENGTH_LONG).show();
                 miubicacion();
 
             }
@@ -222,6 +224,7 @@ public void miubicacion(){
     locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,0,loclistener);
     locationlistener = loclistener;
 }
+
 
 
 }

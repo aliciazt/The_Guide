@@ -1,3 +1,7 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -5,4 +9,18 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dell.mymenunavegacion.MapsActivity" />
+    tools:context="com.example.dell.mymenunavegacion.MapsActivity"
+    tools:layout="@layout/activity_maps" />
+    <Button
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#359c5e"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:padding="8dp"
+        android:layout_margin="5dp"
+        android:text="Filtrar Markers"
+        android:textColor="#ffffff"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>
