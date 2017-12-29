@@ -9,6 +9,11 @@ public class museos {
     public String imagen_url;
     public double Latitud;
     public double Longitud;
-    public String url_sitio;
+    public String costo;
     public String nombre;
+    public String tipo;
+    public String actividades;
+    public String direccion;
+    public String Historia;
+    public int telefono;
 }
