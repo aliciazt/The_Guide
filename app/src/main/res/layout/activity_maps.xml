@@ -12,13 +12,13 @@
     tools:context="com.example.dell.mymenunavegacion.MapsActivity"
     tools:layout="@layout/activity_maps" />
     <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="550px"
+        android:layout_height="150px"
         android:id="@+id/filtro"
-        android:layout_alignParentTop="true"
+        android:textAlignment="center"
+        style="@android:style/Widget.Holo.Light.Spinner"
         android:layout_alignParentRight="true"
-
-
-
-        />
+        android:backgroundTint="#0D7695"
+        android:popupBackground="#0D7695"
+        android:backgroundTintMode="src_in"/>
 </RelativeLayout>

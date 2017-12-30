@@ -68,10 +68,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         ArrayAdapter<CharSequence> adapter;
         Spinner spinner = (Spinner) findViewById(R.id.filtro);
-        adapter=ArrayAdapter.createFromResource(this,R.array.hijos,android.R.layout.simple_spinner_item);
+        adapter=ArrayAdapter.createFromResource(this,R.array.hijos,android.R.layout.simple_spinner_item );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setSelection(4);
+        spinner.setSelection(5);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -98,6 +98,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         retrievedata("HISTORICOS");
                         retrievedata("LEYENDAS");
                         retrievedata("RECREATIVOS");
+                    case 5: mMap.clear();
+
                 }
             }
 
