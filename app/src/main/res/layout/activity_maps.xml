@@ -11,17 +11,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.dell.mymenunavegacion.MapsActivity"
     tools:layout="@layout/activity_maps" />
-    <Button
-        android:id="@+id/filter"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#359c5e"
+        android:id="@+id/filtro"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:padding="8dp"
-        android:layout_margin="5dp"
-        android:text="Filtrar Markers"
-        android:textColor="#ffffff"
         android:layout_alignParentRight="true"
-        android:onClick="showPopup"/>
+
+
+
+        />
 </RelativeLayout>

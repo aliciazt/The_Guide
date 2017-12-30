@@ -17,7 +17,10 @@ import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -34,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.maps.model.MapStyleOptions;
+
 
 import java.util.ArrayList;
 
@@ -61,12 +66,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Button filtro = (Button) findViewById(R.id.filter);
-        filtro.setOnClickListener( new View.OnClickListener(){
+        ArrayAdapter<CharSequence> adapter;
+        Spinner spinner = (Spinner) findViewById(R.id.filtro);
+        adapter=ArrayAdapter.createFromResource(this,R.array.hijos,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(4);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:mMap.clear();
+                        miubicacion();
+                        retrievedata("MUSEOS");
+                        break;
+                    case 1:mMap.clear();
+                            miubicacion();
+                            retrievedata("HISTORICOS");
+                        break;
+                    case 2:mMap.clear();
+                        miubicacion();
+                        retrievedata("RECREATIVOS");
+                        break;
+                    case 3:mMap.clear();
+                        miubicacion();
+                        retrievedata("LEYENDAS");
+                        break;
+                    case 4: mMap.clear();
+                        miubicacion();
+                        retrievedata("MUSEOS");
+                        retrievedata("HISTORICOS");
+                        retrievedata("LEYENDAS");
+                        retrievedata("RECREATIVOS");
+                }
+            }
 
             @Override
-            public void onClick(View view) {
-               // onCreateOptionsMenu();
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -74,8 +111,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setMapStyle(new MapStyleOptions(getResources().getString(R.string.style_json)));
         //lo primero que hacemos es checar los permisos
+        LatLng giu = new LatLng(19.151801, -96.110851);
+        CameraUpdate miubi = CameraUpdateFactory.newLatLngZoom(giu,13);
+         mMap.animateCamera(miubi); //mueve la camara hasta la posicion inicial de la ciudad, vista general
+
         checarpermisos();
 
 
@@ -154,9 +195,8 @@ LocationListener loclistener=new LocationListener() {
 
     }
 //este es el que finalmente agrega al marcador del usuario en el mapa y cada vez que se pide la actualizacion vuelve a poner el marker
-    private void agregarmarcador(double lat, double lng){
+    private LatLng agregarmarcador(double lat, double lng){
         LatLng coordenadas = new LatLng(lat,lng);
-        CameraUpdate miubi = CameraUpdateFactory.newLatLngZoom(coordenadas,16);
         if(marcador!=null) marcador.remove();
         marcador= mMap.addMarker( new MarkerOptions()
                 .position(coordenadas)
@@ -164,42 +204,44 @@ LocationListener loclistener=new LocationListener() {
         CameraPosition camera = new CameraPosition.Builder()
                 .target(coordenadas)
                 .build();
-        mMap.animateCamera(miubi); //mueve la camara hasta la posicion del marcador de mi ubicacion.
-        mMap.setMinZoomPreference(12);
+
+
+        mMap.setMinZoomPreference(13);
         mMap.setMaxZoomPreference(19);
+        return coordenadas;
     }
 
     //funcion para tomar los valores de la base de datos;
-    private void  retrievedata(){
-        databaseReference.child("MUSEOS").addListenerForSingleValueEvent(new ValueEventListener() {
+    private void  retrievedata(String hijo){
+        databaseReference.child(hijo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<museos> muse = new ArrayList<museos>();
+                ArrayList<markers_maps> marker_list = new ArrayList<markers_maps>();
                 for(DataSnapshot entry: dataSnapshot.getChildren()){
-                    museos museo = new museos();
+                    markers_maps place = new markers_maps();
 
                     DataSnapshot foo=entry.child("NOMBRE");
-                    museo.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
+                    place.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo =entry.child("LATITUD");
-                    museo.Latitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()): 10;
+                    place.latitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()): 10;
 
                     foo=entry.child("LONGITUD");
-                    museo.Longitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()) : 10 ;
+                    place.longitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()) : 10 ;
 
                     foo=entry.child("IMAGEN_URL ");
-                    museo.imagen_url= foo.getValue() != null ? foo.getValue().toString(): "";
+                    place.imagen_url= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo=entry.child("COSTO");
-                    museo.costo= foo.getValue() != null ? foo.getValue().toString(): "";
+                    place.costo= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo=entry.child("TIPO");
-                    museo.tipo=foo.getValue() != null ? foo.getValue().toString():"";
+                    place.tipo=foo.getValue() != null ? foo.getValue().toString():"";
 
-                    muse.add(museo);
+                    marker_list.add(place);
 
                 }
-                ponemoslosmarker(muse);
+                ponemoslosmarker(marker_list);
 
             }
 
@@ -208,31 +250,16 @@ LocationListener loclistener=new LocationListener() {
         });
     }
 
-    private void ponemoslosmarker(ArrayList<museos> hola){
+    private void ponemoslosmarker(ArrayList<markers_maps> hola){
 
         LatLng coorde;
         for (int i =0; i<hola.size();i++){
-            //Toast.makeText(this,""+hola.get(i).nombre,Toast.LENGTH_LONG).show();
-            coorde= new LatLng(hola.get(i).Latitud,hola.get(i).Longitud);
+            coorde= new LatLng(hola.get(i).latitud,hola.get(i).longitud);
             mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre));
         }
     }
-    //FUNCIONARA EL MENU?
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_mapa,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menu_museos:
-                retrievedata();
-                break;
-        }
-        return super.onMenuItemSelected(featureId, item);
-    }
+
 }
 
 
