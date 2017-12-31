@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 
 
 import java.util.ArrayList;
+
+import static android.app.PendingIntent.getActivity;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
@@ -214,7 +217,7 @@ LocationListener loclistener=new LocationListener() {
     }
 
     //funcion para tomar los valores de la base de datos;
-    private void  retrievedata(String hijo){
+    private void  retrievedata(final String hijo){
         databaseReference.child(hijo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -231,11 +234,12 @@ LocationListener loclistener=new LocationListener() {
                     foo=entry.child("LONGITUD");
                     place.longitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()) : 10 ;
 
-                    foo=entry.child("IMAGEN_URL ");
+                    foo=entry.child("IMAGEN_URL");
                     place.imagen_url= foo.getValue() != null ? foo.getValue().toString(): "";
 
+                        if(hijo.equals("MUSEOS")){
                     foo=entry.child("COSTO");
-                    place.costo= foo.getValue() != null ? foo.getValue().toString(): "";
+                    place.costo= foo.getValue() != null ? foo.getValue().toString(): "";}
 
                     foo=entry.child("TIPO");
                     place.tipo=foo.getValue() != null ? foo.getValue().toString():"";
@@ -253,11 +257,12 @@ LocationListener loclistener=new LocationListener() {
     }
 
     private void ponemoslosmarker(ArrayList<markers_maps> hola){
-
+    ///SE GUARDA INFORMACION EN EL SNIPET QUE SE USARA PARA PONERLA EN LA VENTANA DE INFORMACION
         LatLng coorde;
         for (int i =0; i<hola.size();i++){
             coorde= new LatLng(hola.get(i).latitud,hola.get(i).longitud);
-            mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre));
+            mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre).snippet(hola.get(i).costo+","+hola.get(i).tipo+","+hola.get(i).imagen_url));
+            mMap.setInfoWindowAdapter(new Custominfowindowadapter(MapsActivity.this));
         }
     }
 
