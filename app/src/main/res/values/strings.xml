@@ -6,4 +6,13 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
+    <string-array name="hijos">
+        <item>MUSEOS</item>
+        <item>HISTORICOS</item>
+        <item>RECREATIVOS</item>
+        <item>LEYENDAS</item>
+        <item>TODOS</item>
+        <item>FILTRAR</item>
+
+    </string-array>
 </resources>
