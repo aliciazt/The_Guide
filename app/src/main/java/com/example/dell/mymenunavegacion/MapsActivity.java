@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -249,6 +252,8 @@ LocationListener loclistener=new LocationListener() {
                 }
                 ponemoslosmarker(marker_list);
 
+
+
             }
 
             @Override
@@ -263,6 +268,7 @@ LocationListener loclistener=new LocationListener() {
             coorde= new LatLng(hola.get(i).latitud,hola.get(i).longitud);
             mMap.addMarker(new MarkerOptions().position(coorde).title(hola.get(i).nombre).snippet(hola.get(i).costo+","+hola.get(i).tipo+","+hola.get(i).imagen_url));
             mMap.setInfoWindowAdapter(new Custominfowindowadapter(MapsActivity.this));
+
         }
     }
 

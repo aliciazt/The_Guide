@@ -9,9 +9,11 @@
     tools:context="com.example.dell.mymenunavegacion.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@android:dimen/notification_large_icon_height"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
         android:background="@color/common_google_signin_btn_text_light_disabled"
         android:text="Conoce, explora, recuerda..."
         android:textAlignment="center"
@@ -22,6 +24,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
 <!---->
