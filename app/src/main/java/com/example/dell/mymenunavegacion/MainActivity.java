@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //Aqui se muestra el inicio
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.Contenedor, new InicioFragment()).commit();
 
     }
 
@@ -86,15 +91,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            // aquie se muestra el inicio
+            fragmentManager.beginTransaction().replace(R.id.Contenedor, new InicioFragment()).commit();
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
         } else if (id == R.id.nav_manage) {
-
+            Fragment Fragment = new MuseosFragment();
+            fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

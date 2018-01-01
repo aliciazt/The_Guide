@@ -231,7 +231,7 @@ LocationListener loclistener=new LocationListener() {
                     DataSnapshot foo=entry.child("NOMBRE");
                     place.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
 
-                    foo =entry.child("LATITUD");
+                   foo =entry.child("LATITUD");
                     place.latitud = foo.getValue() != null ? Double.parseDouble(foo.getValue().toString()): 10;
 
                     foo=entry.child("LONGITUD");
