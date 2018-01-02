@@ -31,7 +31,7 @@ public class museos {
         Historia = historia;
         this.telefono = telefono;
     }
-    public museos(String nombre, String tipo,  String direccion, String telefono) {
+    public museos(String nombre, String tipo,  String direccion, String telefono, String imagen_url) {
 
         this.nombre = nombre;
         this.tipo = tipo;
@@ -39,6 +39,7 @@ public class museos {
         this.direccion = direccion;
 
         this.telefono = telefono;
+        this.imagen_url = imagen_url;
     }
     public museos() {
 

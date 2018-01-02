@@ -61,10 +61,13 @@ public class MuseosFragment extends Fragment {
                     foo=entry.child("TIPO");
                     place.tipo=foo.getValue() != null ? foo.getValue().toString():"";
 
+                    foo=entry.child("IMAGEN_URL");
+                    place.imagen_url=foo.getValue() != null ? foo.getValue().toString():"";
+
                     listmuseos.add(place);
 
                 }
-                AdapterMuseos adapter = new AdapterMuseos(listmuseos);
+                AdapterMuseos adapter = new AdapterMuseos(getContext(), listmuseos);
                 recyclerMuseos.setAdapter(adapter);
 
             }

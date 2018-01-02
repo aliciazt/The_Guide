@@ -36,7 +36,7 @@ public class Custominfowindowadapter implements GoogleMap.InfoWindowAdapter {
         String nombre= marker.getTitle();
         String url= info[2];
         ImageView imagen = (ImageView)v.findViewById(R.id.imagen_w);
-        Picasso.with(mcontext).load(url).fit().centerCrop().into(imagen,new MarkerCallback(marker));
+        //Picasso.with(mcontext).load(url).fit().centerCrop().into(imagen,new MarkerCallback(marker));
         TextView title = (TextView) v.findViewById(R.id.titulo_w);
         TextView coste = (TextView) v.findViewById(R.id.costo_w);
         TextView type = (TextView) v.findViewById(R.id.tipo_w);
