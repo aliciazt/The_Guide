@@ -10,4 +10,7 @@ public interface IComunicaFragments {
 
    abstract public void enviarMuseo(String nombre, String imagen,
                                     String tipo, String direccion, String historia, String act, String costo, String tel);
+
+   abstract public void enviarRecreativo(String nombre, String imagen,
+                                    String tipo, String direccion, String descripcion);
 }

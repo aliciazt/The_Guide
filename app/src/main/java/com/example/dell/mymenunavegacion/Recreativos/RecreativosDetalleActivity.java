@@ -1,12 +1,15 @@
-package com.example.dell.mymenunavegacion;
+package com.example.dell.mymenunavegacion.Recreativos;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.dell.mymenunavegacion.MuseosDetalle;
+import com.example.dell.mymenunavegacion.R;
 
-public class MuseosDetalleActivity extends AppCompatActivity {
+
+public class RecreativosDetalleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -15,7 +18,7 @@ public class MuseosDetalleActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras ();
 
-        MuseosDetalle detailsFragment = extras != null ? MuseosDetalle.newInstance(extras) :  MuseosDetalle.newInstance (null);
+        RecreativosDetalle detailsFragment = extras != null ?  RecreativosDetalle.newInstance (extras) :  RecreativosDetalle.newInstance (null);
 
          getSupportFragmentManager()
                 .beginTransaction()

@@ -26,11 +26,14 @@ import android.widget.Toast;
 
 import com.example.dell.mymenunavegacion.R;
 import com.example.dell.mymenunavegacion.Interfaces.IComunicaFragments;
+import com.example.dell.mymenunavegacion.Recreativos.RecreativosDetalle;
+import com.example.dell.mymenunavegacion.Recreativos.RecreativosFragment;
+import com.example.dell.mymenunavegacion.Recreativos.RecreativosDetalleActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity
+ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IComunicaFragments {
 
 
@@ -105,11 +108,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Fragment Fragment = new MuseosFragment();
             fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_recreativos) {
+            Fragment Fragment = new RecreativosFragment();
+            fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
 
         } else if (id == R.id.nav_send) {
 
-        } else if (id == R.id.nav_galeria) {
+        } else if (id == R.id.nav_share) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,7 +127,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void enviarMuseo(String nombre, String imagen, String tipo, String direccion,
                             String historia, String act, String costo, String tel) {
-        View v = findViewById(R.id.container2); // validar container 2 en la vista original
+        View v = findViewById(R.id.General_container); // validar container 2 en la vista original
 
         if (v == null) {
             Intent intent = new Intent(this, MuseosDetalleActivity.class);
@@ -153,12 +159,52 @@ public class MainActivity extends AppCompatActivity
             MuseosDetalle detailsFragment = MuseosDetalle.newInstance(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            transaction.replace(R.id.container2, detailsFragment);
+            transaction.replace(R.id.General_container, detailsFragment);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.commit();
 
         }
     }
 
-}
+     @Override
+     public void enviarRecreativo(String nombre, String imagen, String tipo, String direccion, String descripcion) {
+
+
+         View v = findViewById(R.id.General_container); // validar container 2 en la vista original
+
+         if (v == null) {
+             Intent intent = new Intent(this, RecreativosDetalleActivity.class);
+
+             intent.putExtra(RecreativosDetalle.ICON_KEY, imagen); //
+             intent.putExtra(RecreativosDetalle.TEXT_KEY, nombre);
+             intent.putExtra(RecreativosDetalle.DIR_KEY, direccion); //
+             intent.putExtra(RecreativosDetalle.TIPO_KEY,tipo );
+             intent.putExtra(RecreativosDetalle.DESCR_KEY, descripcion); //
+
+
+             startActivity(intent);
+
+         } else {
+
+             Bundle bundle = new Bundle ();
+
+             bundle.putString(RecreativosDetalle.ICON_KEY, imagen); //
+             bundle.putString(RecreativosDetalle.TEXT_KEY, nombre);
+             bundle.putString(RecreativosDetalle.DIR_KEY, direccion); //
+             bundle.putString(RecreativosDetalle.TIPO_KEY,tipo );
+             bundle.putString(RecreativosDetalle.DESCR_KEY, descripcion); //
+
+
+             RecreativosDetalle detailsFragment = RecreativosDetalle.newInstance(bundle);
+             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+             transaction.replace(R.id.General_container, detailsFragment);
+             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+             transaction.commit();
+
+         }
+
+     }
+
+ }
 
