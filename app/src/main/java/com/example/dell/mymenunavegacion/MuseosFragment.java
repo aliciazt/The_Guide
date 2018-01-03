@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dell.mymenunavegacion.Interfaces.IComunicaFragments;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,17 @@ public class MuseosFragment extends Fragment {
     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     //ArrayList<museos> listmuseos;
     RecyclerView recyclerMuseos;
+    IComunicaFragments listener;
+
+    public void onAttach(Context context) { //onAttack solo en el fragment
+        super.onAttach(context);
+
+        if (context instanceof IComunicaFragments) {
+            listener = (IComunicaFragments) context;
+        } else {
+            throw new ClassCastException("Error");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +61,16 @@ public class MuseosFragment extends Fragment {
                 for(DataSnapshot entry: dataSnapshot.getChildren()){
                     museos place = new museos();
 
+
+
                     DataSnapshot foo=entry.child("NOMBRE");
                     place.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                   // foo=entry.child("ACTIVIDADES");
+                    //place.actividades= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    //foo=entry.child("COSTO");
+                    //place.costo= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo=entry.child("DIRECCION");
                     place.direccion= foo.getValue() != null ? foo.getValue().toString(): "";
@@ -67,7 +87,7 @@ public class MuseosFragment extends Fragment {
                     listmuseos.add(place);
 
                 }
-                AdapterMuseos adapter = new AdapterMuseos(getContext(), listmuseos);
+                AdapterMuseos adapter = new AdapterMuseos(getContext(), listmuseos, listener);
                 recyclerMuseos.setAdapter(adapter);
 
             }

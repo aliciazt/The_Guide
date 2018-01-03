@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.dell.mymenunavegacion.Interfaces.IComunicaFragments;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import android.content.Context;
@@ -20,10 +22,12 @@ public class AdapterMuseos extends RecyclerView.Adapter<AdapterMuseos.ViewHolder
 
     ArrayList<museos> listmuseos;
     Context context;
+    IComunicaFragments listener;
 
-    public AdapterMuseos(Context context, ArrayList<museos> listmuseos) {
+    public AdapterMuseos(Context context, ArrayList<museos> listmuseos,  IComunicaFragments listener) {
         this.listmuseos = listmuseos;
         this.context=context;
+        this.listener = listener;
     }
 
     public class ViewHolderMuseos extends RecyclerView.ViewHolder {
@@ -50,7 +54,7 @@ public class AdapterMuseos extends RecyclerView.Adapter<AdapterMuseos.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(AdapterMuseos.ViewHolderMuseos holder, int position) {
+    public void onBindViewHolder(AdapterMuseos.ViewHolderMuseos holder,final int position) {
 
 
         holder.nombre.setText(listmuseos.get(position).getNombre());
@@ -58,6 +62,18 @@ public class AdapterMuseos extends RecyclerView.Adapter<AdapterMuseos.ViewHolder
         holder.direccion.setText(listmuseos.get(position).getDireccion());
         holder.telefono.setText(listmuseos.get(position).getTelefono());
         Picasso.with(this.context).load(listmuseos.get(position).getImagen_url()).into(holder.imagen);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String Nombre = listmuseos.get(position).getNombre();
+                String foto = listmuseos.get(position).getImagen_url();
+
+                listener.enviarMuseo(Nombre, foto);
+            }
+        });
+
 
     }
 

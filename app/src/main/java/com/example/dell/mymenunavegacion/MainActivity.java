@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,12 +24,14 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.dell.mymenunavegacion.R;
+import com.example.dell.mymenunavegacion.Interfaces.IComunicaFragments;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IComunicaFragments {
 
 
 
@@ -114,6 +117,34 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    @Override
+    public void enviarMuseo(String nombre, String imagen) {
+        View v = findViewById(R.id.container2); // validar container 2 en la vista original
+
+        if (v == null) {
+            Intent intent = new Intent(this, MuseosDetalleActivity.class);
+
+            intent.putExtra(MuseosDetalle.ICON_KEY, imagen); //
+            intent.putExtra(MuseosDetalle.TEXT_KEY, nombre);
+
+            startActivity(intent);
+
+        } else {
+
+            Bundle bundle = new Bundle ();
+            bundle.putString(MuseosDetalle.ICON_KEY, imagen);
+            bundle.putString(MuseosDetalle.TEXT_KEY, nombre);
+
+            MuseosDetalle detailsFragment = MuseosDetalle.newInstance(bundle);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.container2, detailsFragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.commit();
+
+        }
+    }
 
 }
 
