@@ -31,15 +31,19 @@ public class museos {
         Historia = historia;
         this.telefono = telefono;
     }
-    public museos(String nombre, String tipo,  String direccion, String telefono, String imagen_url) {
+    public museos(String nombre, String actividades, String costo,  String direccion, String Historia,
+                  String imagen_url, String telefono, String tipo ) {
 
         this.nombre = nombre;
+        this.actividades = actividades;
+        this.costo = costo;
+        this.direccion = direccion;
+        this.Historia = Historia;
+        this.imagen_url = imagen_url;
+        this.telefono = telefono;
         this.tipo = tipo;
 
-        this.direccion = direccion;
 
-        this.telefono = telefono;
-        this.imagen_url = imagen_url;
     }
     public museos() {
 
@@ -126,6 +130,14 @@ public class museos {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+
+    @Override
+    public String toString() {
+        return
+                "Dirección: " + direccion + '\'' +
+                "Tipo: " + tipo + '\'';
     }
 }
 

@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void enviarMuseo(String nombre, String imagen) {
+    public void enviarMuseo(String nombre, String imagen, String tipo, String direccion,
+                            String historia, String act, String costo, String tel) {
         View v = findViewById(R.id.container2); // validar container 2 en la vista original
 
         if (v == null) {
@@ -127,14 +128,27 @@ public class MainActivity extends AppCompatActivity
 
             intent.putExtra(MuseosDetalle.ICON_KEY, imagen); //
             intent.putExtra(MuseosDetalle.TEXT_KEY, nombre);
+            intent.putExtra(MuseosDetalle.DIR_KEY, direccion); //
+            intent.putExtra(MuseosDetalle.TIPO_KEY,tipo );
+            intent.putExtra(MuseosDetalle.TEL_KEY, tel); //
+            intent.putExtra(MuseosDetalle.COST_KEY, costo);
+            intent.putExtra(MuseosDetalle.HIS_KEY, historia); //
+            intent.putExtra(MuseosDetalle.ACT_KEY, act);
 
             startActivity(intent);
 
         } else {
 
             Bundle bundle = new Bundle ();
-            bundle.putString(MuseosDetalle.ICON_KEY, imagen);
+
+            bundle.putString(MuseosDetalle.ICON_KEY, imagen); //
             bundle.putString(MuseosDetalle.TEXT_KEY, nombre);
+            bundle.putString(MuseosDetalle.DIR_KEY, direccion); //
+            bundle.putString(MuseosDetalle.TIPO_KEY,tipo );
+            bundle.putString(MuseosDetalle.TEL_KEY, tel); //
+            bundle.putString(MuseosDetalle.COST_KEY, costo);
+            bundle.putString(MuseosDetalle.HIS_KEY, historia); //
+            bundle.putString(MuseosDetalle.ACT_KEY, act);
 
             MuseosDetalle detailsFragment = MuseosDetalle.newInstance(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

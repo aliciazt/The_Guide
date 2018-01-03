@@ -66,14 +66,20 @@ public class MuseosFragment extends Fragment {
                     DataSnapshot foo=entry.child("NOMBRE");
                     place.nombre= foo.getValue() != null ? foo.getValue().toString(): "";
 
-                   // foo=entry.child("ACTIVIDADES");
-                    //place.actividades= foo.getValue() != null ? foo.getValue().toString(): "";
+                    foo=entry.child("ACTIVIDADES");
+                    place.actividades= foo.getValue() != null ? foo.getValue().toString(): "";
 
-                    //foo=entry.child("COSTO");
-                    //place.costo= foo.getValue() != null ? foo.getValue().toString(): "";
+                    foo=entry.child("COSTO");
+                    place.costo= foo.getValue() != null ? foo.getValue().toString(): "";
 
                     foo=entry.child("DIRECCION");
                     place.direccion= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    foo=entry.child("HISTORIA");
+                    place.Historia= foo.getValue() != null ? foo.getValue().toString(): "";
+
+                    foo=entry.child("IMAGEN_URL");
+                    place.imagen_url=foo.getValue() != null ? foo.getValue().toString():"";
 
                     foo=entry.child("TELEFONO");
                     place.telefono= foo.getValue() != null ? foo.getValue().toString(): "";
@@ -81,8 +87,7 @@ public class MuseosFragment extends Fragment {
                     foo=entry.child("TIPO");
                     place.tipo=foo.getValue() != null ? foo.getValue().toString():"";
 
-                    foo=entry.child("IMAGEN_URL");
-                    place.imagen_url=foo.getValue() != null ? foo.getValue().toString():"";
+
 
                     listmuseos.add(place);
 
@@ -96,10 +101,5 @@ public class MuseosFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) { }
         });
     }
-/*
-    private  void llenar(){
-        listmuseos.add(new museos("La nube","la escoba", "Perro", "2222222222"));
-        listmuseos.add(new museos("Papelera", "caraver", "duna","2222222222"));
-        listmuseos.add(new museos("Museo Naval", "caraver", "algo","2222222222"));
-    }*/
+
 }

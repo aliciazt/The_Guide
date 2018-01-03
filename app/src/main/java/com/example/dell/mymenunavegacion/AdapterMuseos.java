@@ -61,7 +61,7 @@ public class AdapterMuseos extends RecyclerView.Adapter<AdapterMuseos.ViewHolder
         holder.tipo.setText(listmuseos.get(position).getTipo());
         holder.direccion.setText(listmuseos.get(position).getDireccion());
         holder.telefono.setText(listmuseos.get(position).getTelefono());
-        Picasso.with(this.context).load(listmuseos.get(position).getImagen_url()).into(holder.imagen);
+        Picasso.with(this.context).load(listmuseos.get(position).getImagen_url()).resize(100, 100).centerCrop().error(R.drawable.logo_opt).into(holder.imagen);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +69,14 @@ public class AdapterMuseos extends RecyclerView.Adapter<AdapterMuseos.ViewHolder
 
                 String Nombre = listmuseos.get(position).getNombre();
                 String foto = listmuseos.get(position).getImagen_url();
+                String tipo = listmuseos.get(position).getTipo();
+                String direccion = listmuseos.get(position).getDireccion();
+                String historia = listmuseos.get(position).getHistoria();
+                String act = listmuseos.get(position).getActividades();
+                String costo = listmuseos.get(position).getCosto();
+                String tel = listmuseos.get(position).getTelefono();
 
-                listener.enviarMuseo(Nombre, foto);
+                listener.enviarMuseo(Nombre, foto, tipo, direccion, historia, act, costo, tel);
             }
         });
 

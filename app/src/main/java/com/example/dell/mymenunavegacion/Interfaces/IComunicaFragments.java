@@ -8,5 +8,6 @@ import com.example.dell.mymenunavegacion.museos;
 
 public interface IComunicaFragments {
 
-    public void enviarMuseo(String nombre, String imagen);
+   abstract public void enviarMuseo(String nombre, String imagen,
+                                    String tipo, String direccion, String historia, String act, String costo, String tel);
 }
