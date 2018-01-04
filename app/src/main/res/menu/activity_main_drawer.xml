@@ -4,23 +4,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home"
             android:title="Inicio" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/google_maps"
             android:title="Mapa" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/book_open_page_variant"
             android:title="Leyendas" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/bank"
             android:title="Museos" />
         <item
             android:id="@+id/nav_recreativos"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/basket"
+            android:title="Recreativos" />
+        <item
+            android:id="@+id/nav_galery"
+            android:icon="@drawable/camera_burst"
             android:title="Galeria" />
     </group>
 

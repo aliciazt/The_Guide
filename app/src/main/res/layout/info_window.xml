@@ -2,10 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:height="24dp"
-    android:width="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24"
     android:background="@drawable/balloon_bg">
 
     <ImageView
@@ -51,6 +47,7 @@
             android:textAlignment="center"
             android:textColor="#000"
             android:fontFamily="monospace"
+            android:layout_marginLeft="25dp"
             android:layout_marginBottom="20dp"
             android:textSize="15dp"
             />
