@@ -13,4 +13,6 @@ public interface IComunicaFragments {
 
    abstract public void enviarRecreativo(String nombre, String imagen,
                                     String tipo, String direccion, String descripcion);
+
+   abstract public void enviarGaleria(String Nombre, String foto, String anio, String descripcion);
 }

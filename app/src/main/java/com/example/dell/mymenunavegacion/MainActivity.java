@@ -27,13 +27,16 @@ import android.widget.Toast;
 import com.example.dell.mymenunavegacion.R;
 import com.example.dell.mymenunavegacion.Interfaces.IComunicaFragments;
 import com.example.dell.mymenunavegacion.Recreativos.RecreativosDetalle;
+import com.example.dell.mymenunavegacion.Galeria.GaleriaDetalle;
 import com.example.dell.mymenunavegacion.Recreativos.RecreativosFragment;
+import com.example.dell.mymenunavegacion.Galeria.GaleriaFragment;
 import com.example.dell.mymenunavegacion.Recreativos.RecreativosDetalleActivity;
+import com.example.dell.mymenunavegacion.Galeria.GaleriaDetalleActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
- public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IComunicaFragments {
 
 
@@ -112,7 +115,9 @@ import com.squareup.picasso.Picasso;
             Fragment Fragment = new RecreativosFragment();
             fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_galery) {
+            Fragment Fragment = new GaleriaFragment();
+            fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
 
         } else if (id == R.id.nav_share) {
 
@@ -206,5 +211,42 @@ import com.squareup.picasso.Picasso;
 
      }
 
- }
+    @Override
+    public void enviarGaleria(String Nombre, String foto, String anio, String descripcion) {
+
+        View v = findViewById(R.id.General_container); // validar container 2 en la vista original
+
+        if (v == null) {
+            Intent intent = new Intent(this, GaleriaDetalleActivity.class);
+
+            intent.putExtra(GaleriaDetalle.ICON_KEY, foto); //
+            intent.putExtra(GaleriaDetalle.TEXT_KEY, Nombre);
+            intent.putExtra(GaleriaDetalle.ANIO_KEY, anio);
+            intent.putExtra(GaleriaDetalle.DESCR_KEY, descripcion); //
+
+
+            startActivity(intent);
+
+        } else {
+
+            Bundle bundle = new Bundle ();
+
+            bundle.putString(GaleriaDetalle.ICON_KEY, foto); //
+            bundle.putString(GaleriaDetalle.TEXT_KEY, Nombre);
+            bundle.putString(GaleriaDetalle.ANIO_KEY, anio );
+            bundle.putString(GaleriaDetalle.DESCR_KEY, descripcion); //
+
+
+            GaleriaDetalle detailsFragment = GaleriaDetalle.newInstance(bundle);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.General_container, detailsFragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.commit();
+
+        }
+
+    }
+
+}
 
