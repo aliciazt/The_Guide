@@ -11,9 +11,10 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginLeft="15dp"
         android:src="@drawable/logo_opt"
         android:id="@+id/imagen_w"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
 
         />
     <LinearLayout
@@ -35,12 +36,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
             android:id="@+id/tipo_w"
             android:textAlignment="center"
             android:textColor="#000"
             android:layout_marginBottom="20dp"
             android:textSize="13dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="monospace"
             android:text="tipo de cualquier marcador"/>
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +53,7 @@
             android:fontFamily="monospace"
             android:layout_marginBottom="20dp"
             android:textSize="15dp"
-            android:text="costo:si/no de museos"/>
+            />
 
     </LinearLayout>
 

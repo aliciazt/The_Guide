@@ -32,17 +32,28 @@ public class Custominfowindowadapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
-        String[] info= marker.getSnippet().split(",");
-        String nombre= marker.getTitle();
-        String url= info[2];
+        String infosnip= marker.getSnippet();
         ImageView imagen = (ImageView)v.findViewById(R.id.imagen_w);
-        //Picasso.with(mcontext).load(url).fit().centerCrop().into(imagen,new MarkerCallback(marker));
         TextView title = (TextView) v.findViewById(R.id.titulo_w);
         TextView coste = (TextView) v.findViewById(R.id.costo_w);
         TextView type = (TextView) v.findViewById(R.id.tipo_w);
-        title.setText(nombre);
-        coste.setText("costo:"+""+info[0]);
-        type.setText("tipo de marcador:"+""+info[1]);
+            if(infosnip!= null){
+                String[] info= infosnip.split(",");
+                 String nombre= marker.getTitle();
+                 String url= info[2];
+                //imagen.setImageResource(R.drawable.logo_opt);
+            Picasso.with(mcontext).load(url).resize(100,100).centerCrop().into(imagen,new MarkerCallback(marker));
+                 title.setText(nombre);
+                if(info[0] .equals("null")){coste.setText("");}
+                else{
+                coste.setText("costo:"+""+info[0]);}
+                type.setText("tipo de marcador:"+"\n"+info[1]);
+            }else{
+        imagen.setImageResource(R.drawable.usuario);
+        title.setText(marker.getTitle());
+        type.setText("Aqui estas actualmente");
+            coste.setText("");}
+
         return v;
     }
 

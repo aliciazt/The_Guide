@@ -104,8 +104,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         retrievedata("HISTORICOS");
                         retrievedata("LEYENDAS");
                         retrievedata("RECREATIVOS");
+                        break;
                     case 5: mMap.clear();
-
+                            miubicacion();
+                            break;
                 }
             }
 

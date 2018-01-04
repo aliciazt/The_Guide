@@ -16,6 +16,7 @@ public class MarkerCallback implements  com.squareup.picasso.Callback {
     @Override
     public void onSuccess() {
         if(marker!=null && marker.isInfoWindowShown()){
+           marker.hideInfoWindow();
             marker.showInfoWindow();
         }
     }
