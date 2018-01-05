@@ -15,4 +15,6 @@ public interface IComunicaFragments {
                                     String tipo, String direccion, String descripcion);
 
    abstract public void enviarGaleria(String Nombre, String foto, String anio, String descripcion);
+
+   abstract  public void enviarLeyendas(String Nombre, String imagen, String tipo, String direccion, String url_leyenda );
 }
