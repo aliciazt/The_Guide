@@ -32,6 +32,9 @@ import com.example.dell.mymenunavegacion.Recreativos.RecreativosFragment;
 import com.example.dell.mymenunavegacion.Galeria.GaleriaFragment;
 import com.example.dell.mymenunavegacion.Recreativos.RecreativosDetalleActivity;
 import com.example.dell.mymenunavegacion.Galeria.GaleriaDetalleActivity;
+import com.example.dell.mymenunavegacion.leyendas.LeyendasDetalle;
+import com.example.dell.mymenunavegacion.leyendas.LeyendasDetalleActivity;
+import com.example.dell.mymenunavegacion.leyendas.LeyendasFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -101,14 +104,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_inicio) {
             // aquie se muestra el inicio
             fragmentManager.beginTransaction().replace(R.id.Contenedor, new InicioFragment()).commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_maps) {
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_leyendas) {
+            Fragment Fragment = new LeyendasFragment();
+            fragmentManager.beginTransaction().replace(R.id.Contenedor,Fragment).commit();
+        } else if (id == R.id.nav_museos) {
             Fragment Fragment = new MuseosFragment();
             fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
         } else if (id == R.id.nav_recreativos) {
@@ -238,6 +243,44 @@ public class MainActivity extends AppCompatActivity
 
 
             GaleriaDetalle detailsFragment = GaleriaDetalle.newInstance(bundle);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.General_container, detailsFragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.commit();
+
+        }
+
+    }
+
+    @Override
+    public void enviarLeyendas(String Nombre, String imagen, String tipo, String direccion, String url_leyenda) {
+        View v = findViewById(R.id.General_container); // validar container 2 en la vista original
+
+        if (v == null) {
+            Intent intent = new Intent(this, LeyendasDetalleActivity.class);
+
+            intent.putExtra(LeyendasDetalle.ICON_KEY, imagen); //
+            intent.putExtra(LeyendasDetalle.TEXT_KEY, Nombre);
+            intent.putExtra(LeyendasDetalle.DIR_KEY, direccion); //
+            intent.putExtra(LeyendasDetalle.TIPO_KEY,tipo );
+            intent.putExtra(LeyendasDetalle.CONT_KEY, url_leyenda); //
+
+
+            startActivity(intent);
+
+        } else {
+
+            Bundle bundle = new Bundle ();
+
+            bundle.putString(LeyendasDetalle.ICON_KEY, imagen); //
+            bundle.putString(LeyendasDetalle.TEXT_KEY, Nombre);
+            bundle.putString(LeyendasDetalle.DIR_KEY, direccion); //
+            bundle.putString(LeyendasDetalle.TIPO_KEY,tipo );
+            bundle.putString(LeyendasDetalle.CONT_KEY, url_leyenda); //
+
+
+            LeyendasDetalle detailsFragment = LeyendasDetalle.newInstance(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             transaction.replace(R.id.General_container, detailsFragment);

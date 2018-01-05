@@ -175,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         location =  locationmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         actualizarubicacion(location);
-        locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,loclistener);
+        locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,0,loclistener);
         locationlistener = loclistener;
     }
 //variable que ocupamos aca arriba, tambien salio del vasto mundo del internet
