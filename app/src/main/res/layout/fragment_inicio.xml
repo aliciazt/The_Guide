@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/common_google_signin_btn_text_light_disabled"
-        android:text="Conoce, explora, recuerda..."
+
         android:gravity="center"
         android:layout_gravity="center"
 
