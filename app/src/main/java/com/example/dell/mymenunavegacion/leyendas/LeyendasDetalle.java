@@ -1,5 +1,6 @@
 package com.example.dell.mymenunavegacion.leyendas;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dell.mymenunavegacion.DownloadTextFile;
 import com.example.dell.mymenunavegacion.R;
 import com.squareup.picasso.Picasso;
 
@@ -16,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
 
 /**
  * Created by Alicia Zarate on 4/1/2018.
@@ -60,15 +64,14 @@ public class LeyendasDetalle extends Fragment {
             String tipo = (String) extras.get(LeyendasDetalle.TIPO_KEY);
             String contenido = (String) extras.get(LeyendasDetalle.CONT_KEY);
 
-
-                textView3.setText(contenido);
-
-
-
                     textView.setText(text);
             Picasso.with(getContext()).load(foto).into(imageView);
             textView1.setText(direccion);
             textView2.setText(tipo);
+            String uri = contenido;
+
+            new DownloadTextFile(textView3).execute (uri);
+
 
         }
     }
