@@ -1,6 +1,8 @@
 package com.example.dell.mymenunavegacion;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -38,7 +40,7 @@ public class DownloadTextFile extends AsyncTask<String, Void, String> {
             urlConnection = (HttpsURLConnection) new URL(uri).openConnection ();
             if (urlConnection.getResponseCode() != HttpsURLConnection.HTTP_OK) return response;
 
-            InputStreamReader isr = new InputStreamReader(urlConnection.getInputStream(), "utf-8");
+            InputStreamReader isr = new InputStreamReader(urlConnection.getInputStream(), "ISO-8859-1");
             BufferedReader reader = new BufferedReader(isr);
             StringBuilder builder = new StringBuilder();
             String line;
@@ -62,6 +64,7 @@ public class DownloadTextFile extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         weakReference.get().setText (s);
+        TextJustification.justify(weakReference.get());
         super.onPostExecute(s);
     }
 }

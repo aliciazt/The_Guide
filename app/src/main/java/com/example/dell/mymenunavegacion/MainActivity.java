@@ -126,8 +126,12 @@ public class MainActivity extends AppCompatActivity
             Fragment Fragment = new GaleriaFragment();
             fragmentManager.beginTransaction().replace(R.id.Contenedor, Fragment).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.Paginas) {
+            Toast.makeText(this,"informacion e imagenes extraidas desde aguapasada.wordpress",Toast.LENGTH_LONG).show();
+        }
+        else if (id == R.id.Librerias){
 
+            Toast.makeText(this,"LIbreria de justificacion de texto de twiceyuan",Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

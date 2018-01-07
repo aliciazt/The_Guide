@@ -1,5 +1,6 @@
 package com.example.dell.mymenunavegacion.leyendas;
 
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,12 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.mymenunavegacion.DownloadTextFile;
 import com.example.dell.mymenunavegacion.R;
+import com.example.dell.mymenunavegacion.TextJustification;
 import com.squareup.picasso.Picasso;
+import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -54,8 +58,7 @@ public class LeyendasDetalle extends Fragment {
         ImageView imageView = (ImageView) getActivity().findViewById(R.id.L_imagen_detalle);
         TextView textView1 = (TextView) getActivity().findViewById(R.id.L_DIRECCION);
         TextView textView2 = (TextView) getActivity().findViewById(R.id.L_TIPO);
-        TextView textView3 = (TextView) getActivity().findViewById(R.id.L_CONTENIDO);
-
+       TextView textView3 = (TextView) getActivity().findViewById(R.id.L_CONTENIDO);
         Bundle extras = getArguments();
         if(extras !=null){
             String foto = (String) extras.get(LeyendasDetalle.ICON_KEY);
@@ -64,13 +67,15 @@ public class LeyendasDetalle extends Fragment {
             String tipo = (String) extras.get(LeyendasDetalle.TIPO_KEY);
             String contenido = (String) extras.get(LeyendasDetalle.CONT_KEY);
 
-                    textView.setText(text);
+            textView.setText(text);
             Picasso.with(getContext()).load(foto).into(imageView);
             textView1.setText(direccion);
             textView2.setText(tipo);
             String uri = contenido;
-
             new DownloadTextFile(textView3).execute (uri);
+
+
+
 
 
         }

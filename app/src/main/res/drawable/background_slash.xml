@@ -2,14 +2,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@color/colorBlack">
+        android:drawable="@color/colorAccent">
 
     </item>
     <item>
 
      <bitmap
          android:gravity="center"
-         android:src="@mipmap/ic_veracruz">
+         android:src="@drawable/ejemplo_2">
 
      </bitmap>
     </item>
