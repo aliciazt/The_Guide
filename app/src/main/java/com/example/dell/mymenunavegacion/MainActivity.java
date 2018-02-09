@@ -3,15 +3,21 @@ package com.example.dell.mymenunavegacion;
 import android.*;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -197,8 +203,15 @@ public class MainActivity extends AppCompatActivity
              intent.putExtra(RecreativosDetalle.TIPO_KEY,tipo );
              intent.putExtra(RecreativosDetalle.DESCR_KEY, descripcion); //
 
+             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-             startActivity(intent);
+                 getWindow().setExitTransition(new Slide());
+                 startActivity(intent,
+                         ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
+             }
+             else {
+                 startActivity(intent);
+             }
 
          } else {
 
@@ -235,8 +248,17 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra(GaleriaDetalle.ANIO_KEY, anio);
             intent.putExtra(GaleriaDetalle.DESCR_KEY, descripcion); //
 
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-            startActivity(intent);
+                getWindow().setExitTransition(new Explode());
+                startActivity(intent,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
+
+            }
+            else {
+                startActivity(intent);
+            }
+
 
         } else {
 
@@ -272,8 +294,15 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra(LeyendasDetalle.TIPO_KEY,tipo );
             intent.putExtra(LeyendasDetalle.CONT_KEY, url_leyenda); //
 
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-            startActivity(intent);
+                getWindow().setExitTransition(new Fade().setDuration(1000));
+                startActivity(intent,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
+            }
+            else {
+                startActivity(intent);
+            }
 
         } else {
 

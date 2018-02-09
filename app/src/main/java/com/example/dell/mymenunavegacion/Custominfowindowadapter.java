@@ -32,34 +32,34 @@ public class Custominfowindowadapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
         String infosnip= marker.getSnippet();
         ImageView imagen = (ImageView)v.findViewById(R.id.imagen_w);
         TextView title = (TextView) v.findViewById(R.id.titulo_w);
         TextView coste = (TextView) v.findViewById(R.id.costo_w);
         TextView type = (TextView) v.findViewById(R.id.tipo_w);
-            if(infosnip!= null){
-                String[] info= infosnip.split(",");
-                 String nombre= marker.getTitle();
-                 String url= info[2];
-                //imagen.setImageResource(R.drawable.logo_opt);
+        if(infosnip!= null){
+            String[] info= infosnip.split(",");
+            String nombre= marker.getTitle();
+            String url= info[2];
+            //imagen.setImageResource(R.drawable.logo_opt);
             Picasso.with(mcontext).load(url).resize(100,100).centerCrop().into(imagen,new MarkerCallback(marker));
-                 title.setText(nombre);
-                if(info[0] .equals("null")){coste.setText("");}
-                else{
-                coste.setText("costo:"+""+info[0]);}
-                type.setText("tipo de marcador:"+"\n"+info[1]);
-            }else{
-        imagen.setImageResource(R.drawable.usuario);
-        title.setText(marker.getTitle());
-        type.setText("Aqui estas actualmente");
+            title.setText(nombre);
+            if(info[0] .equals("null")){coste.setText("");}
+            else{
+                coste.setText("Costo:"+""+info[0]);}
+            type.setText("Tipo de marcador:"+"\n"+info[1]);
+        }else{
+            imagen.setImageResource(R.drawable.usuario);
+            title.setText(marker.getTitle());
+            type.setText("Aqui estas actualmente");
             coste.setText("");}
 
         return v;
-    }
-
-    @Override
-    public View getInfoContents(Marker marker) {
-        return null;
     }
 }
 
